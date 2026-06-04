@@ -341,7 +341,12 @@ async function executeTool(name: string, args: any) {
     }
 
     if (name === "buildin_read_page") {
-      let query = args.query as string;
+      const pageIdArg = args.page_id as string;
+      if (!pageIdArg) {
+        throw new Error("page_id is required");
+      }
+      
+      let query = pageIdArg;
       let pageId = parseId(query);
 
       // If it doesn't look like a UUID, treat it as a search query
